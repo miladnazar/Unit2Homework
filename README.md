@@ -13,8 +13,8 @@ The greatest decrease in losses (date and amount) over the entire period.
 
 Financial Analysis:
 ----------------------------
-Total Months: 86
-Total: $38382578
-Average  Change: $-2315.12
-Greatest Increase in Profits: 0 ($1926159)
-Greatest Decrease in Profits: 0 ($-2196167)
+* Total Months: 86
+* Total: $38382578
+* Average  Change: $-2315.12
+* Greatest Increase in Profits: 0 ($1926159)
+* Greatest Decrease in Profits: 0 ($-2196167)

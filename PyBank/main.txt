@@ -1,0 +1,84 @@
+# Import the pathlib and csv library/file
+from pathlib import Path
+import csv
+
+# The file Path
+csvpath = Path('Resources/budget_data.csv')
+
+# Initials
+Records = []
+Total_Months = 0
+Profit_Total = 0
+Minimum_Profit = 0
+Maximum_Profit = 0
+Minimum_Date = 0
+Maximum_Date = 0
+PreviousMonthlyProfit = None
+MonthlyProfitChange = 0
+TotalMonthlyProfitChange = 0
+
+
+# Open CSV file
+with open(csvpath, 'r') as csvfile:
+    
+    # What's the header
+    csvreader = csv.reader(csvfile, delimiter=',')
+    csv_header = next(csvreader)
+    
+    #Read each row of data after header
+    for row in csvreader:
+        
+        # print(row)
+        # The total number of months included in the dataset.
+        Total_Months += 1
+        
+        # The net total amount of Profit/Losses over the entire period.
+        MonthlyProfitLoss = int(row[1])
+        Date = row[0]
+        Profit_Total += MonthlyProfitLoss
+
+        
+        # Calculate monthly profit change
+        if PreviousMonthlyProfit is None:
+            PreviousMonthlyProfit = MonthlyProfitLoss
+            # print("First Row")
+            # print(f"previousMonthlyProfit = {previousMonthlyProfit}")
+        else:
+            MonthlyProfitChange = MonthlyProfitLoss - PreviousMonthlyProfit
+            PreviousMonthlyProfit = MonthlyProfitLoss
+            # print("Other Rows")
+            # print(f"previousMonthlyProfit = {previousMonthlyProfit}") 
+
+        
+        # The greatest increase in profits (date and amount) over the entire period. 
+        if Minimum_Profit == 0:
+            Minimum_Profit = MonthlyProfitChange
+            MinimumDate = Date
+        elif MonthlyProfitChange < Minimum_Profit:
+            Minimum_Profit = MonthlyProfitChange
+            MinimumDate = Date
+        elif MonthlyProfitChange > Maximum_Profit:
+            Maximum_Profit = MonthlyProfitChange
+            MaximumDate = Date
+
+        # The greatest decrease in losses (date and amount) over the entire period.
+            
+        TotalMonthlyProfitChange += MonthlyProfitChange
+        
+
+# Average P/L
+AveragePnl = round(Profit_Total / Total_Months, 2)
+
+        
+# Average Monthly Profit Change
+AverageMonthlyProfitChange = round(TotalMonthlyProfitChange / (Total_Months - 1), 2)
+    
+# Prints
+print()
+print("Financial Analysis:")
+print("----------------------------")
+print(f"Total Months: {Total_Months}")
+print(f"Total: ${Profit_Total}")
+print(f"Average  Change: ${AverageMonthlyProfitChange}")
+print(f"Greatest Increase in Profits: {Maximum_Date} (${Maximum_Profit})")
+print(f"Greatest Decrease in Profits: {Minimum_Date} (${Minimum_Profit})")
